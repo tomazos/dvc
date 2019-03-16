@@ -54,6 +54,9 @@ cc_library(
     hdrs = [
         "scanner.h",
     ],
+    deps = [
+        ":log",
+    ],
 )
 
 cc_library(
@@ -61,12 +64,18 @@ cc_library(
     hdrs = [
         "parser.h",
     ],
+    deps = [
+        ":log",
+    ],
 )
 
 cc_library(
     name = "json",
     hdrs = [
         "json.h",
+    ],
+    deps = [
+        ":log",
     ],
 )
 

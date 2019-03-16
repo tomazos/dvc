@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#include "dvc/log.h"
+
 namespace dvc {
 
 template <class Token>
@@ -24,7 +26,7 @@ class parser {
 
   void incr(size_t offset = 1) {
     pos_ += offset;
-    DVC_ASSERT_LT(pos(), data.size()) << "unexpected end of file " << filename;
+    DVC_ASSERT_LT(pos(), data.size(), "unexpected end of file ", filename);
   }
 
  private:

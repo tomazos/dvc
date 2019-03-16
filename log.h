@@ -59,16 +59,16 @@ template <typename... Args>
                a, ' ', #op, ' ', b, ": ", ::dvc::concat(__VA_ARGS__))
 
 #define DVC_ASSERT_EQ(a, b, ...) \
-  DVC_ASSERT_OP(==, a, b, ::dvc::concat(__VA_ARGS__));
+  DVC_ASSERT_OP(==, a, b, ::dvc::concat(__VA_ARGS__))
 #define DVC_ASSERT_NE(a, b, ...) \
-  DVC_ASSERT_OP(!=, a, b, ::dvc::concat(__VA_ARGS__));
+  DVC_ASSERT_OP(!=, a, b, ::dvc::concat(__VA_ARGS__))
 #define DVC_ASSERT_LT(a, b, ...) \
-  DVC_ASSERT_OP(<, a, b, ::dvc::concat(__VA_ARGS__));
+  DVC_ASSERT_OP(<, a, b, ::dvc::concat(__VA_ARGS__))
 #define DVC_ASSERT_GT(a, b, ...) \
-  DVC_ASSERT_OP(>, a, b, ::dvc::concat(__VA_ARGS__));
+  DVC_ASSERT_OP(>, a, b, ::dvc::concat(__VA_ARGS__))
 #define DVC_ASSERT_LE(a, b, ...) \
-  DVC_ASSERT_OP(<=, a, b, ::dvc::concat(__VA_ARGS__));
+  DVC_ASSERT_OP(<=, a, b, ::dvc::concat(__VA_ARGS__))
 #define DVC_ASSERT_GE(a, b, ...) \
-  DVC_ASSERT_OP(>=, a, b, ::dvc::concat(__VA_ARGS__));
+  DVC_ASSERT_OP(>=, a, b, ::dvc::concat(__VA_ARGS__))
 
 }  // namespace dvc
