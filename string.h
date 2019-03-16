@@ -1,9 +1,19 @@
 #pragma once
 
+#include <sstream>
 #include <string>
 #include <vector>
 
 namespace dvc {
+
+inline std::string concat() { return ""; }
+
+template <typename... Args>
+inline std::string concat(Args&&... args) {
+  std::ostringstream o;
+  (o << ... << std::forward<Args>(args));
+  return o.str();
+}
 
 inline std::vector<std::string> split(const std::string& sep,
                                       const std::string& joined) {

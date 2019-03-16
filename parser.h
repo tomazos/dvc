@@ -1,6 +1,5 @@
 #pragma once
 
-#include <glog/logging.h>
 #include <string>
 #include <vector>
 
@@ -25,7 +24,7 @@ class parser {
 
   void incr(size_t offset = 1) {
     pos_ += offset;
-    CHECK_LT(pos(), data.size()) << "unexpected end of file " << filename;
+    DVC_ASSERT_LT(pos(), data.size()) << "unexpected end of file " << filename;
   }
 
  private:

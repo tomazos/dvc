@@ -1,6 +1,27 @@
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
+    name = "log",
+    hdrs = [
+        "log.h",
+    ],
+    deps = [
+        ":string",
+    ],
+)
+
+cc_test(
+    name = "log_test",
+    srcs = [
+        "log_test.cc",
+    ],
+    deps = [
+        ":log",
+        ":program",
+    ],
+)
+
+cc_library(
     name = "program",
     srcs = [
         "program.cc",
@@ -9,11 +30,11 @@ cc_library(
         "program.h",
     ],
     linkopts = [
-        "-lglog",
         "-lgflags",
         "-ldl",
     ],
     deps = [
+        ":log",
         ":terminate",
     ],
 )
@@ -80,5 +101,8 @@ cc_library(
     ],
     linkopts = [
         "-lbacktrace",
+    ],
+    deps = [
+        ":log",
     ],
 )

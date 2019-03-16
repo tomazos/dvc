@@ -1,7 +1,8 @@
 #pragma once
 
-#include <glog/logging.h>
 #include <string>
+
+#include "dvc/log.h"
 
 namespace dvc {
 
@@ -33,7 +34,7 @@ class scanner {
   void incr(size_t offset = 1) {
     if (peek() == '\n') line_++;
     pos_ += offset;
-    CHECK_LE(pos(), data.size()) << "unexpected end of file " << filename;
+    DVC_ASSERT_LE(pos(), data.size()) << "unexpected end of file " << filename;
   }
 
   const std::string& get_data() const { return data; }
