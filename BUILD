@@ -1,6 +1,31 @@
 package(default_visibility = ["//visibility:public"])
 
 cc_library(
+    name = "opts",
+    srcs = [
+        "opts.cc",
+    ],
+    hdrs = [
+        "opts.h",
+    ],
+    deps = [
+        ":log",
+        ":parser",
+        ":string",
+    ],
+)
+
+cc_binary(
+    name = "opts_test",
+    srcs = [
+        "opts_test.cc",
+    ],
+    deps = [
+        ":opts",
+    ],
+)
+
+cc_library(
     name = "log",
     hdrs = [
         "log.h",
@@ -35,6 +60,7 @@ cc_library(
     ],
     deps = [
         ":log",
+        ":opts",
         ":terminate",
     ],
 )
@@ -90,6 +116,17 @@ cc_library(
     name = "string",
     hdrs = [
         "string.h",
+    ],
+)
+
+cc_test(
+    name = "string_test",
+    srcs = [
+        "string_test.cc",
+    ],
+    deps = [
+        ":log",
+        ":string",
     ],
 )
 

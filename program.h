@@ -6,7 +6,6 @@
 namespace dvc {
 
 struct program {
-  std::vector<std::string> args;
   program(int& argc, char**& argv);
   ~program();
 };

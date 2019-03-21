@@ -15,6 +15,13 @@ inline std::string concat(Args&&... args) {
   return o.str();
 }
 
+template <typename T>
+[[nodiscard]] bool destring(const std::string& s, T& t) {
+  std::istringstream i(s);
+  i >> t;
+  return (!i.fail() && i.eof());
+}
+
 inline std::vector<std::string> split(const std::string& sep,
                                       const std::string& joined) {
   std::vector<std::string> result;
