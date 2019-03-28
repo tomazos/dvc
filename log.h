@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "dvc/string.h"
+#include "dvc/time.h"
 
 #define DVC_LOG(...)                                     \
   do {                                                   \
@@ -50,12 +51,14 @@ namespace dvc {
 
 template <typename... Args>
 void info(Args&&... args) {
+  std::cout << now_string() << " ";
   (std::cout << ... << std::forward<Args>(args));
   std::cout << std::endl;
 }
 
 template <typename... Args>
 void error(Args&&... args) {
+  std::cerr << now_string() << " ";
   (std::cerr << ... << std::forward<Args>(args));
   std::cerr << std::endl;
 }

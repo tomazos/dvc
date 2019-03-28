@@ -32,6 +32,7 @@ cc_library(
     ],
     deps = [
         ":string",
+        ":time",
     ],
 )
 
@@ -138,6 +139,13 @@ cc_library(
 )
 
 cc_library(
+    name = "math",
+    hdrs = [
+        "math.h",
+    ],
+)
+
+cc_library(
     name = "terminate",
     srcs = [
         "terminate.cc",
@@ -152,3 +160,34 @@ cc_library(
         ":log",
     ],
 )
+
+cc_library(
+    name = "sha3",
+    hdrs = [
+        "hex.h",
+        "sha3.h",
+    ],
+    deps = [
+        ":log",
+    ],
+)
+ 
+cc_test(
+    name = "sha3_test",
+    srcs = [
+        "sha3_test.cc",
+    ],
+    data = [
+        "testdata/ShortMsgKAT_SHA3-224.txt",
+        "testdata/ShortMsgKAT_SHA3-256.txt",
+        "testdata/ShortMsgKAT_SHA3-384.txt",
+        "testdata/ShortMsgKAT_SHA3-512.txt",
+        "testdata/ShortMsgKAT_SHAKE128.txt",
+        "testdata/ShortMsgKAT_SHAKE256.txt",
+    ],
+    deps = [
+        ":sha3",
+        "//dvc:file",
+    ],
+)
+ 

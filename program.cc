@@ -5,6 +5,10 @@
 
 namespace dvc {
 
+program::program() {
+  dvc::install_terminate_handler();
+}
+
 program::program(int& argc, char**& argv) {
   dvc::init_options(argc, argv);
   dvc::install_terminate_handler();

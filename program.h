@@ -6,6 +6,7 @@
 namespace dvc {
 
 struct program {
+  program();
   program(int& argc, char**& argv);
   ~program();
 };
