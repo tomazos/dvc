@@ -1,16 +1,16 @@
 #pragma once
 
+#include <array>
 #include <cstring>
 #include <vector>
-#include <array>
 
 static_assert(sizeof(size_t) == sizeof(unsigned long long int));
 
 namespace dvc {
 /**
-  *  Function to compute SHA3-224 on the input message. The output length is
+ *  Function to compute SHA3-224 on the input message. The output length is
  * fixed to 28 bytes.
-  */
+ */
 
 inline void SHAKE128(const void *input, size_t inputByteLen, void *output,
                      int outputByteLen);
@@ -32,8 +32,7 @@ std::vector<std::byte> SHAKE256(const Collection &input, int outputByteLen) {
   return output;
 }
 
-inline void SHA3_224(const void *input, size_t inputByteLen,
-                     void *output);
+inline void SHA3_224(const void *input, size_t inputByteLen, void *output);
 
 template <typename Collection>
 std::array<std::byte, 224 / 8> SHA3_224(const Collection &input) {
@@ -43,11 +42,10 @@ std::array<std::byte, 224 / 8> SHA3_224(const Collection &input) {
 }
 
 /**
-  *  Function to compute SHA3-256 on the input message. The output length is
+ *  Function to compute SHA3-256 on the input message. The output length is
  * fixed to 32 bytes.
-  */
-inline void SHA3_256(const void *input, size_t inputByteLen,
-                     void *output);
+ */
+inline void SHA3_256(const void *input, size_t inputByteLen, void *output);
 
 inline std::string SHA3(std::string_view input) {
   std::string sha;
@@ -65,12 +63,11 @@ std::array<std::byte, 256 / 8> SHA3_256(const Collection &input) {
 }
 
 /**
-  *  Function to compute SHA3-384 on the input message. The output length is
+ *  Function to compute SHA3-384 on the input message. The output length is
  * fixed to 48 bytes.
-  */
+ */
 
-inline void SHA3_384(const void *input, size_t inputByteLen,
-                     void *output);
+inline void SHA3_384(const void *input, size_t inputByteLen, void *output);
 
 template <typename Collection>
 std::array<std::byte, 384 / 8> SHA3_384(const Collection &input) {
@@ -80,11 +77,10 @@ std::array<std::byte, 384 / 8> SHA3_384(const Collection &input) {
 }
 
 /**
-  *  Function to compute SHA3-512 on the input message. The output length is
+ *  Function to compute SHA3-512 on the input message. The output length is
  * fixed to 64 bytes.
-  */
-inline void SHA3_512(const void *input, size_t inputByteLen,
-                     void *output);
+ */
+inline void SHA3_512(const void *input, size_t inputByteLen, void *output);
 
 template <typename Collection>
 std::array<std::byte, 512 / 8> SHA3_512(const Collection &input) {
@@ -94,36 +90,36 @@ std::array<std::byte, 512 / 8> SHA3_512(const Collection &input) {
 }
 
 /**
-  * Function to compute the Keccak[r, c] sponge function over a given input.
-  * @param  rate            The value of the rate r.
-  * @param  capacity        The value of the capacity c.
-  * @param  input           Pointer to the input message.
-  * @param  inputByteLen    The number of input bytes provided in the input
+ * Function to compute the Keccak[r, c] sponge function over a given input.
+ * @param  rate            The value of the rate r.
+ * @param  capacity        The value of the capacity c.
+ * @param  input           Pointer to the input message.
+ * @param  inputByteLen    The number of input bytes provided in the input
  * message.
-  * @param  delimitedSuffix Bits that will be automatically appended to the end
-  *                         of the input message, as in domain separation.
-  *                         This is a byte containing from 0 to 7 bits
-  *                         These <i>n</i> bits must be in the least significant
+ * @param  delimitedSuffix Bits that will be automatically appended to the end
+ *                         of the input message, as in domain separation.
+ *                         This is a byte containing from 0 to 7 bits
+ *                         These <i>n</i> bits must be in the least significant
  * bit positions
-  *                         and must be delimited with a bit 1 at position
+ *                         and must be delimited with a bit 1 at position
  * <i>n</i>
-  *                         (counting from 0=LSB to 7=MSB) and followed by bits
+ *                         (counting from 0=LSB to 7=MSB) and followed by bits
  * 0
-  *                         from position <i>n</i>+1 to position 7.
-  *                         Some examples:
-  *                             - If no bits are to be appended, then @a
+ *                         from position <i>n</i>+1 to position 7.
+ *                         Some examples:
+ *                             - If no bits are to be appended, then @a
  * delimitedSuffix must be 0x01.
-  *                             - If the 2-bit sequence 0,1 is to be appended
+ *                             - If the 2-bit sequence 0,1 is to be appended
  * (as for SHA3-*), @a delimitedSuffix must be 0x06.
-  *                             - If the 4-bit sequence 1,1,1,1 is to be
+ *                             - If the 4-bit sequence 1,1,1,1 is to be
  * appended (as for SHAKE*), @a delimitedSuffix must be 0x1F.
-  *                             - If the 7-bit sequence 1,1,0,1,0,0,0 is to be
+ *                             - If the 7-bit sequence 1,1,0,1,0,0,0 is to be
  * absorbed, @a delimitedSuffix must be 0x8B.
-  * @param  output          Pointer to the buffer where to store the output.
-  * @param  outputByteLen   The number of output bytes desired.
-  * @pre    One must have r+c=1600 and the rate a multiple of 8 bits in this
+ * @param  output          Pointer to the buffer where to store the output.
+ * @param  outputByteLen   The number of output bytes desired.
+ * @pre    One must have r+c=1600 and the rate a multiple of 8 bits in this
  * implementation.
-  */
+ */
 inline void Keccak(unsigned int rate, unsigned int capacity,
                    const unsigned char *input,
                    unsigned long long int inputByteLen,
@@ -131,45 +127,41 @@ inline void Keccak(unsigned int rate, unsigned int capacity,
                    unsigned long long int outputByteLen);
 
 /**
-  *  Function to compute SHAKE128 on the input message with any output length.
-  */
+ *  Function to compute SHAKE128 on the input message with any output length.
+ */
 inline void SHAKE128(const void *input, size_t inputByteLen, void *output,
                      int outputByteLen) {
-  Keccak(1344, 256, (const uint8_t *)input, inputByteLen, 0x1F, (uint8_t *)output,
-         outputByteLen);
+  Keccak(1344, 256, (const uint8_t *)input, inputByteLen, 0x1F,
+         (uint8_t *)output, outputByteLen);
 }
 
 /**
-  *  Function to compute SHAKE256 on the input message with any output length.
-  */
+ *  Function to compute SHAKE256 on the input message with any output length.
+ */
 inline void SHAKE256(const void *input, size_t inputByteLen, void *output,
                      int outputByteLen) {
-  Keccak(1088, 512, (const uint8_t *)input, inputByteLen, 0x1F, (uint8_t *)output,
-         outputByteLen);
+  Keccak(1088, 512, (const uint8_t *)input, inputByteLen, 0x1F,
+         (uint8_t *)output, outputByteLen);
 }
 
-inline void SHA3_224(const void *input, size_t inputByteLen,
-                     void *output) {
-  Keccak(1152, 448, (const uint8_t *)input, inputByteLen, 0x06, (uint8_t *)output,
-         28);
+inline void SHA3_224(const void *input, size_t inputByteLen, void *output) {
+  Keccak(1152, 448, (const uint8_t *)input, inputByteLen, 0x06,
+         (uint8_t *)output, 28);
 }
 
-inline void SHA3_256(const void *input, size_t inputByteLen,
-                     void *output) {
-  Keccak(1088, 512, (const uint8_t *)input, inputByteLen, 0x06, (uint8_t *)output,
-         32);
+inline void SHA3_256(const void *input, size_t inputByteLen, void *output) {
+  Keccak(1088, 512, (const uint8_t *)input, inputByteLen, 0x06,
+         (uint8_t *)output, 32);
 }
 
-inline void SHA3_384(const void *input, size_t inputByteLen,
-                     void *output) {
-  Keccak(832, 768, (const uint8_t *)input, inputByteLen, 0x06, (uint8_t *)output,
-         48);
+inline void SHA3_384(const void *input, size_t inputByteLen, void *output) {
+  Keccak(832, 768, (const uint8_t *)input, inputByteLen, 0x06,
+         (uint8_t *)output, 48);
 }
 
-inline void SHA3_512(const void *input, size_t inputByteLen,
-                     void *output) {
-  Keccak(576, 1024, (const uint8_t *)input, inputByteLen, 0x06, (uint8_t *)output,
-         64);
+inline void SHA3_512(const void *input, size_t inputByteLen, void *output) {
+  Keccak(576, 1024, (const uint8_t *)input, inputByteLen, 0x06,
+         (uint8_t *)output, 64);
 }
 
 template <typename T, typename U>
@@ -294,4 +286,3 @@ inline void Keccak(unsigned int rate, unsigned int capacity,
 }
 
 }  // namespace dvc
-

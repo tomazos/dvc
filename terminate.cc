@@ -29,6 +29,7 @@ void terminate_handler() {
 void install_terminate_handler() { std::set_terminate(terminate_handler); }
 
 void fatal_signal_handler(int signal) {
+  (void)signal;
   dvc::error("segmentation fault");
   log_stacktrace();
   std::abort();

@@ -260,7 +260,7 @@ struct typed_option<std::vector<E>> : option {
   }
 
   void set_value(const std::string& string) override {
-    DVC_FATAL("unexpected set_value on vector option: ", name);
+    DVC_FATAL("unexpected set_value on vector option: ", name, " = ", string);
   }
 
   void add_value(const std::string& string) override {

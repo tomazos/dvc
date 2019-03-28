@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include <vector>
 #include <string_view>
+#include <vector>
 
 #include "dvc/log.h"
 
@@ -10,12 +10,14 @@ namespace dvc {
 
 inline std::vector<std::byte> HexStringToByteArray(std::string_view hex_string);
 inline std::string ByteArrayToHexString(const std::byte* data, size_t size);
-inline std::string ByteArrayToHexString(const std::vector<std::byte>& byte_array) {
+inline std::string ByteArrayToHexString(
+    const std::vector<std::byte>& byte_array) {
   return ByteArrayToHexString(byte_array.data(), byte_array.size());
 }
 
 template <size_t size>
-inline std::string ByteArrayToHexString(const std::array<std::byte, size>& byte_array) {
+inline std::string ByteArrayToHexString(
+    const std::array<std::byte, size>& byte_array) {
   return ByteArrayToHexString(byte_array.data(), size);
 }
 
@@ -108,14 +110,17 @@ inline char IntToHexChar(int hex_int) {
 }
 
 inline std::byte HexCharPairToByte(std::pair<char, char> hex_pair) {
-  return std::byte(HexCharToInt(hex_pair.first) << 4 | HexCharToInt(hex_pair.second) << 0);
+  return std::byte(HexCharToInt(hex_pair.first) << 4 |
+                   HexCharToInt(hex_pair.second) << 0);
 }
 
 inline std::pair<char, char> ByteToHexCharPair(std::byte byte) {
-  return {IntToHexChar((uint8_t(byte) & 0xF0) >> 4), IntToHexChar((uint8_t(byte) & 0x0F) >> 0)};
+  return {IntToHexChar((uint8_t(byte) & 0xF0) >> 4),
+          IntToHexChar((uint8_t(byte) & 0x0F) >> 0)};
 }
 
-inline std::vector<std::byte> HexStringToByteArray(std::string_view hex_string) {
+inline std::vector<std::byte> HexStringToByteArray(
+    std::string_view hex_string) {
   DVC_ASSERT_EQ(hex_string.size() % 2, 0u);
   const auto nbytes = hex_string.size() / 2;
   std::vector<std::byte> byte_array(nbytes);
@@ -137,4 +142,3 @@ inline std::string ByteArrayToHexString(const std::byte* data, size_t size) {
 }
 
 }  // namespace dvc
-

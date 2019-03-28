@@ -171,7 +171,7 @@ cc_library(
         ":log",
     ],
 )
- 
+
 cc_test(
     name = "sha3_test",
     srcs = [
@@ -190,4 +190,26 @@ cc_test(
         "//dvc:file",
     ],
 )
- 
+
+cc_library(
+    name = "sampler",
+    hdrs = [
+        "sampler.h",
+    ],
+    deps = [
+        ":log",
+    ],
+)
+
+cc_test(
+    name = "sampler_test",
+    srcs = [
+        "sampler_test.cc",
+    ],
+    deps = [
+        ":log",
+        ":math",
+        ":program",
+        ":sampler",
+    ],
+)

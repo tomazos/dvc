@@ -1,23 +1,24 @@
 #include "dvc/sha3.h"
 
 #include <filesystem>
+#include <functional>
 #include <iostream>
+#include <map>
 #include <string>
 #include <vector>
-#include <functional>
-#include <map>
 
+#include "dvc/file.h"
 #include "dvc/hex.h"
 #include "dvc/log.h"
-#include "dvc/file.h"
 
-#define EXPECT_SHA(f, input, output)                               \
-  DVC_ASSERT_EQ(dvc::ByteArrayToHexString(f(std::string_view(input))),       \
+#define EXPECT_SHA(f, input, output)                                   \
+  DVC_ASSERT_EQ(dvc::ByteArrayToHexString(f(std::string_view(input))), \
                 dvc::ByteArrayToHexString(dvc::HexStringToByteArray(output)))
 
-#define EXPECT_SHAKE(f, input, output_len, output)                   \
-  DVC_ASSERT_EQ(dvc::ByteArrayToHexString(f(std::string_view(input), output_len)), \
-            dvc::ByteArrayToHexString(dvc::HexStringToByteArray(output)))
+#define EXPECT_SHAKE(f, input, output_len, output)                       \
+  DVC_ASSERT_EQ(                                                         \
+      dvc::ByteArrayToHexString(f(std::string_view(input), output_len)), \
+      dvc::ByteArrayToHexString(dvc::HexStringToByteArray(output)))
 
 void sha3test_empty() {
   EXPECT_SHA(
@@ -58,8 +59,9 @@ void sha3test_empty() {
 
 using ByteArray = std::vector<std::byte>;
 
-void ParseTestFile(std::filesystem::path testfile,
-                   std::function<void(std::map<std::string, std::string>)> on_entry) {
+void ParseTestFile(
+    std::filesystem::path testfile,
+    std::function<void(std::map<std::string, std::string>)> on_entry) {
   std::string testdata = dvc::load_file(testfile);
   DVC_ASSERT_NE(testdata.size(), 0u);
   std::map<std::string, std::string> current_entry;
@@ -75,8 +77,7 @@ void ParseTestFile(std::filesystem::path testfile,
     } else {
       size_t pos = line.find(" = ");
       DVC_ASSERT_NE(pos, std::string::npos);
-      current_entry[line.substr(0, pos)] =
-          line.substr(pos + 3);
+      current_entry[line.substr(0, pos)] = line.substr(pos + 3);
     }
   }
 
@@ -95,7 +96,8 @@ void ShakeFileTest(F shake, std::filesystem::path testfile) {
     auto msg = dvc::HexStringToByteArray(entry["Msg"]);
     auto squeezed = entry["Squeezed"];
 
-    DVC_ASSERT_EQ(dvc::ByteArrayToHexString(shake(msg, squeezed.size() / 2)), squeezed);
+    DVC_ASSERT_EQ(dvc::ByteArrayToHexString(shake(msg, squeezed.size() / 2)),
+                  squeezed);
   });
 }
 
@@ -116,12 +118,12 @@ void ShaFileTest(F sha, std::filesystem::path testfile) {
 }
 
 void sha3test_files() {
-  ShakeFileTest([](const ByteArray& input, int len) {
-    return dvc::SHAKE128(input, len);
-  }, "dvc/testdata/ShortMsgKAT_SHAKE128.txt");
-  ShakeFileTest([](const ByteArray& input, int len) {
-    return dvc::SHAKE256(input, len);
-  }, "dvc/testdata/ShortMsgKAT_SHAKE256.txt");
+  ShakeFileTest(
+      [](const ByteArray& input, int len) { return dvc::SHAKE128(input, len); },
+      "dvc/testdata/ShortMsgKAT_SHAKE128.txt");
+  ShakeFileTest(
+      [](const ByteArray& input, int len) { return dvc::SHAKE256(input, len); },
+      "dvc/testdata/ShortMsgKAT_SHAKE256.txt");
   ShaFileTest([](const ByteArray& input) { return dvc::SHA3_224(input); },
               "dvc/testdata/ShortMsgKAT_SHA3-224.txt");
   ShaFileTest([](const ByteArray& input) { return dvc::SHA3_256(input); },

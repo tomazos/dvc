@@ -22,6 +22,11 @@ template <typename T>
   return (!i.fail() && i.eof());
 }
 
+[[nodiscard]] inline bool destring(const std::string& s, std::string& t) {
+  t = s;
+  return true;
+}
+
 inline std::vector<std::string> split(const std::string& sep,
                                       const std::string& joined) {
   std::vector<std::string> result;

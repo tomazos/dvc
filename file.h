@@ -22,6 +22,12 @@ class file_reader {
 
   void read(void* buf, size_t n) { ifs.read((char*)buf, n); }
 
+  std::string read_string(size_t n) {
+    std::string s(n, '\0');
+    read(s.data(), n);
+    return s;
+  }
+
   template <typename T>
   T rread() {
     T t;

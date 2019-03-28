@@ -71,7 +71,8 @@ template <typename... Args>
 
 template <typename... Args>
 [[noreturn]] void fail(Args&&... args) {
-  error(std::forward<Args>(args)...);
+  (std::cerr << ... << std::forward<Args>(args));
+  std::cerr << std::endl;
   std::exit(EXIT_FAILURE);
 }
 
