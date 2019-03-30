@@ -56,7 +56,6 @@ cc_library(
         "program.h",
     ],
     linkopts = [
-        "-lgflags",
         "-ldl",
     ],
     deps = [
