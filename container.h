@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <utility>
 
+#include "dvc/log.h"
+
 namespace dvc {
 
 template <typename Container, typename Element>

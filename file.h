@@ -84,6 +84,35 @@ class file_writer {
     rwrite<uint8_t>(s);
   }
 
+  template <typename T>
+  size_t prepare_backpatch() {
+    size_t backpatch = tell();
+    rwrite(T());
+    return backpatch;
+  }
+
+  template <typename T>
+  void write_backpatch(size_t backpatch, T t) {
+    size_t pos = tell();
+    seek(backpatch);
+    rwrite(t);
+    seek(pos);
+  }
+
+  void append_file(std::filesystem::path path) {
+    file_reader reader(path);
+    size_t remaining = reader.size();
+    constexpr size_t bufsize = 1 << 14;
+    char buf[bufsize];
+    while (remaining > bufsize) {
+      reader.read(buf, bufsize);
+      write(buf, bufsize);
+      remaining -= bufsize;
+    }
+    reader.read(buf, remaining);
+    write(buf, remaining);
+  }
+
   void write(const void* buf, size_t n) { ofs.write((const char*)buf, n); }
   void write(std::string_view sv) { write(sv.data(), sv.size()); }
   template <typename... Args>
@@ -109,6 +138,11 @@ class file_writer {
   std::ofstream ofs;
 };
 
+inline void save_file(const std::filesystem::path& filename,
+                      std::string_view data) {
+  file_writer(filename, truncate).write(data);
+}
+
 inline std::string load_file(const std::filesystem::path& filename) {
   file_reader reader(filename);
   std::string s;
@@ -117,8 +151,8 @@ inline std::string load_file(const std::filesystem::path& filename) {
   return s;
 }
 
-inline void touch_file(const std::filesystem::path& fspath) {
-  file_writer writer(fspath, append);
+inline void touch_file(const std::filesystem::path& filename) {
+  file_writer(filename, append);
 }
 
 }  // namespace dvc
