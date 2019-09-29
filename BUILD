@@ -212,3 +212,23 @@ cc_test(
         ":sampler",
     ],
 )
+
+cc_library(
+    name = "python",
+    hdrs = [
+        "python.h",
+    ],
+    linkopts = [
+        "-lpython3.7m",
+    ],
+)
+
+cc_test(
+    name = "python_test",
+    srcs = [
+        "python_test.cc",
+    ],
+    deps = [
+        ":python",
+    ],
+)
