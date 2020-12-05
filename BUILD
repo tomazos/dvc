@@ -219,7 +219,7 @@ cc_library(
         "python.h",
     ],
     linkopts = [
-        "-lpython3.7m",
+        "-lpython3.8",
     ],
 )
 
