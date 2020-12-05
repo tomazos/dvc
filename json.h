@@ -2,6 +2,7 @@
 
 #include <rapidjson/ostreamwrapper.h>
 #include <rapidjson/writer.h>
+
 #include <memory>
 
 #include "dvc/log.h"

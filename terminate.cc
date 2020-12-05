@@ -1,9 +1,10 @@
 #include "dvc/terminate.h"
 
-#include "dvc/log.h"
-
 #include <signal.h>
+
 #include <iostream>
+
+#include "dvc/log.h"
 
 #define BOOST_STACKTRACE_USE_BACKTRACE 1
 #include <boost/stacktrace.hpp>
